@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Idade Média e Jogo do Guerreiro Medieval</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+        }
+        .container {
+            max-width: 800px;
+            margin: auto;
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        h1, h2 {
+            color: #4CAF50;
+        }
+        ul {
+            list-style-type: none;
+            padding: 0;
+        }
+        li {
+            margin: 5px 0;
+        }
+        a {
+            color: #4CAF50;
+            text-decoration: none;
+        }
+        a:hover {
+            text-decoration: underline;
+        }
+        section {
+            margin-bottom: 20px;
+        }
+        #quiz {
+            background: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        fieldset {
+            border: 1px solid #ddd;
+            padding: 10px;
+            margin-bottom: 10px;
+        }
+        legend {
+            font-weight: bold;
+        }
+        label {
+            display: block;
+            margin: 5px 0;
+        }
+        button {
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+            margin: 4px 2px;
+            cursor: pointer;
+            border-radius: 4px;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+        #gameCanvas {
+            display: block;
+            margin: auto;
+            background-color: #ffffff;
+            border: 2px solid #000;
+            position: relative;
+        }
+        #score {
+            text-align: center;
+            font-size: 24px;
+            margin: 20px;
+        }
+        #gameOver {
+            display: none;
+            text-align: center;
+            font-size: 24px;
+            color: red;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Idade Média</h1>
+        <p>A Idade Média é o período da história europeia que vai aproximadamente do século V ao XV. É marcada por importantes eventos e transformações sociais, culturais e políticas.</p>
+        <ul>
+            <li><a href="#inicio">Início da Idade Média</a></li>
+            <li><a href="#caracteristicas">Características Principais</a></li>
+            <li><a href="#figuras">Figuras Importantes</a></li>
+        </ul>
+        <section id="inicio">
+            <h2>Início da Idade Média</h2>
+            <p>A Idade Média começou após a queda do Império Romano do Ocidente, por volta do século V. Este período é dividido em três fases: Alta Idade Média, Baixa Idade Média e Idade Média Central.</p>
+        </section>
+        <section id="caracteristicas">
+            <h2>Características Principais</h2>
+            <p>Durante a Idade Média, a Europa viu o surgimento do feudalismo, o domínio da Igreja Católica, e o desenvolvimento de novas estruturas sociais e econômicas.</p>
+            <ul>
+                <li>Feudalismo</li>
+                <li>Domínio da Igreja Católica</li>
+                <li>Crusadas</li>
+                <li>Desenvolvimento das cidades</li>
+            </ul>
+        </section>
+        <section id="figuras">
+            <h2>Figuras Importantes</h2>
+            <p>Várias figuras desempenharam papéis cruciais durante a Idade Média:</p>
+            <ul>
+                <li><strong>Carlos Magno</strong> - Imperador do Sacro Império Romano-Germânico</li>
+                <li><strong>Joana d'Arc</strong> - Heroína francesa da Guerra dos Cem Anos</li>
+                <li><strong>William, o Conquistador</strong> - Rei da Inglaterra após a Batalha de Hastings</li>
+            </ul>
+        </section>
+        <section id="quiz">
+            <h2>Quiz: Teste Seus Conhecimentos sobre a Idade Média</h2>
+            <form id="quizForm">
+                <fieldset>
+                    <legend>1. Qual foi o principal sistema social da Idade Média?</legend>
+                    <label><input type="radio" name="q1" value="Feudalismo"> Feudalismo</label><br>
+                    <label><input type="radio" name="q1" value="Capitalismo"> Capitalismo</label><br>
+                    <label><input type="radio" name="q1" value="Comunismo"> Comunismo</label><br>
+                </fieldset>
+                <fieldset>
+                    <legend>2. Quem foi um famoso imperador da Idade Média?</legend>
+                    <label><input type="radio" name="q2" value="Carlos Magno"> Carlos Magno</label><br>
+                    <label><input type="radio" name="q2" value="Napoleão Bonaparte"> Napoleão Bonaparte</label><br>
+                    <label><input type="radio" name="q2" value="Júlio César"> Júlio César</label><br>
+                </fieldset>
+                <fieldset>
+                    <legend>3. O que foi a Inquisição?</legend>
+                    <label><input type="radio" name="q3" value="Uma instituição para caçar bruxas"> Uma instituição para caçar bruxas</label><br>
+                    <label><input type="radio" name="q3" value="Um tipo de guerra"> Um tipo de guerra</label><br>
+                    <label><input type="radio" name="q3" value="Um sistema de governo"> Um sistema de governo</label><br>
+                </fieldset>
+                <button type="button" onclick="checkQuiz()">Verificar Respostas</button>
+            </form>
+            <p id="quizResult"></p>
+        </section>
+        <section id="game">
+            <h2>Jogo do Guerreiro Medieval</h2>
+            <p>Ajude o guerreiro a destruir os objetos para ganhar pontos!</p>
+            <canvas id="gameCanvas" width="800" height="600"></canvas>
+            <div id="score">Pontuação: 0</div>
+            <div id="gameOver">Fim de Jogo! <br> Pontuação Final: <span id="finalScore"></span></div>
+        </section>
+    </div>
+    <script>
+        // Quiz
+        function checkQuiz() {
+            let total = 3;
+            let score = 0;
+
+            // Respostas corretas
+            const respostasCorretas = {
+                q1: "Feudalismo",
+                q2: "Carlos Magno",
+                q3: "Uma instituição para caçar bruxas"
+            };
+
+            // Verificar respostas
+            for (let i = 1; i <= total; i++) {
+                let resposta = document.querySelector(`input[name="q${i}"]:checked`);
+                if (resposta && resposta.value === respostasCorretas[`q${i}`]) {
+                    score++;
+                }
+            }
+
+            // Exibir resultado
+            const resultado = document.getElementById('quizResult');
+            resultado.textContent = `Você acertou ${score} de ${total} questões.`;
+            resultado.style.color = score === total ? 'green' : 'red';
+        }
+
+        // Jogo do Guerreiro Medieval
+        const canvas = document.getElementById('gameCanvas');
+        const ctx = canvas.getContext('2d');
+        const scoreDisplay = document.getElementById('score');
+        const gameOverDisplay = document.getElementById('gameOver');
+        const finalScoreDisplay = document.getElementById('finalScore');
+
+        let score = 0;
+        let gameInterval;
+        let objects = [];
+        let objectSize = 50;
+        let objectSpeed = 2;
+        let spawnInterval = 2000; // milliseconds
+        let gameDuration = 30000; // milliseconds
+
+        // Initialize game
+        function initGame() {
+            score = 0;
+            scoreDisplay.textContent = `Pontuação: ${score}`;
+            gameOverDisplay.style.display = 'none';
+            objects = [];
+            clearInterval(gameInterval);
+            gameInterval = setInterval(updateGame, 20);
+            setTimeout(endGame, gameDuration);
+        }
+
+        // Update game state
+        function updateGame() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            handleObjects();
+            drawObjects();
+        }
+
+        // Handle object logic
+        function handleObjects() {
+            objects.forEach((obj, index) => {
+                obj.y += objectSpeed;
+                if (obj.y > canvas.height) {
+                    objects.splice(index, 1);
+                }
+            });
+
+            if (Math.random() < 0.02) {
+                spawnObject();
+            }
+        }
+
+        // Draw objects on canvas
+        function drawObjects() {
+            ctx.fillStyle = 'red';
+            objects.forEach(obj => {
+                ctx.fillRect(obj.x, obj.y, objectSize, objectSize);
+            });
+        }
+
+        // Spawn a new object
+        function spawnObject() {
+            const x = Math.random() * (canvas.width - objectSize);
+            const y = -objectSize;
+            objects.push({ x, y });
+        }
+
+        // Handle mouse click
+        canvas.addEventListener('click', (event) => {
+            const rect = canvas.getBoundingClientRect();
+            const x = event.clientX - rect.left;
+            const y = event.clientY - rect.top;
+
+            objects = objects.filter(obj => {
+                if (x >= obj.x && x <= obj.x + objectSize &&
+                    y >= obj.y && y <= obj.y + objectSize) {
+                    score++;
+                    scoreDisplay.textContent = `Pontuação: ${score}`;
+                    return false;
+                }
+                return true;
+            });
+        });
+
+        // End the game
+        function endGame() {
+            clearInterval(gameInterval);
+            finalScoreDisplay.textContent = score;
+            gameOverDisplay.style.display = 'block';
+        }
+
+        // Start the game
+        initGame();
+    </script>
+</body>
+</html>
